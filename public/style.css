@@ -8,6 +8,21 @@ html {
   position: relative;
 }
 
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.column_scroll {
+  /* flex: 50%; */
+  height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 #banner {
   height: 50px;
 
@@ -36,6 +51,14 @@ html {
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+
+#caseDiv {
+  /* margin-top: 40px; */
+  padding: 40px;
+
+  
+
 }
 
 @media screen and (max-width: 1000px) {
@@ -108,8 +131,21 @@ html {
     border: 1px solid #4CAF50;
     border-radius: 4px;
   }
-  .img {
-    max-width: 90%;
+
+  #submitDiagnosis {
+    padding: 10px 20px;
+    margin-bottom: none;
+  
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+  }
+
+  .test_result_img {
+    max-width: 75%;
     height: auto;
   }
 

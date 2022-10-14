@@ -9,6 +9,8 @@ const getTestsDB = moduleToFetch.getTestsDB;
 const newCase = moduleToFetch.getCase;
 const userTests = moduleToFetch.getUserTests;
 const updateDifficulty = moduleToFetch.updateDifficulty;
+const getPE_DB = moduleToFetch.getPE_DB;
+const getTreatmentsDB = moduleToFetch.getTreatmentsDB;
 
 
 
@@ -36,9 +38,20 @@ app.get("/symptoms", async (req, res) => {
     res.json(symptomsDict);
   });
 
+app.get("/treatments", async (req, res) => {
+const treatmentsDict = await getTreatmentsDB();
+res.json(treatmentsDict);
+});
+
+app.get("/pe_findings", async (req, res) => {
+    const PE_Dict = await getPE_DB();
+    res.json(PE_Dict);
+});
+
 app.get("/case", async (req, res) => {
     const caseInfo = await newCase();
-    console.log(caseInfo);
+    console.log("getting a new case");
+    // console.log(caseInfo);
     res.json(caseInfo)
 });
 
@@ -51,9 +64,12 @@ app.post("/submit_tests", async (req, res) => {
 
 app.post("/update_difficulty", async (req, res) => {
     console.log("trying...");
+    // console.log(req.body.id);
     // const tests_str = req.body;
     // console.log(tests_str)
     const data = await updateDifficulty(req.body.number, req.body.id);
+    console.log("gotcha");
+    res.send("a");
 });
 
 app.listen(port, console.log(`Server started on ${port}`));
