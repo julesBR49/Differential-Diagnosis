@@ -1,5 +1,6 @@
 
 const getSymptomsFromBackend = async () => {
+    console.log("extra.js Sx");
     const rest = await fetch("http://localhost:8000/symptoms");
     const data = await rest.json();
     return data;
@@ -11,11 +12,11 @@ const getTreatmentsFromBackend = async () => {
     return data;
 };
 
-const getPEFromBackend = async () => {
-    const rest = await fetch("http://localhost:8000/pe_findings");
-    const data = await rest.json();
-    return data;
-};
+// const getPEFromBackend = async () => {
+//     const rest = await fetch("http://localhost:8000/pe_findings");
+//     const data = await rest.json();
+//     return data;
+// };
 
 const getTestResultsFromBackend = async () => {
     const rest = await fetch("http://localhost:8000/test_results");
@@ -58,8 +59,9 @@ const parseTestData = function(test_array, case_id, testsDict, testResultsDict){
     return parsedTests;
 };
 
-const getNewCase = async (symptomsDict, testsDict, testResultsDict, PE_Dict, treatmentsDict) => {
-    const resp = await fetch("http://localhost:8000/case");
+const getNewCase = async (symptomsDict, testsDict, testResultsDict, treatmentsDict) => {
+    console.log("new Case in extra");
+    // const resp = await fetch("http://localhost:8000/case");
     const caseInfo = await resp.json();
     // const symptomsDict = await symptomsDict_input;
     // console.log(symptomsDict);
@@ -68,19 +70,18 @@ const getNewCase = async (symptomsDict, testsDict, testResultsDict, PE_Dict, tre
     // const PE_Dict = await PE_Dict_input;
     const case_div = document.createElement('div');
     case_div.classList.add('caseContainer');
-    console.log(caseInfo.primarySymptoms);
-    console.log(symptomsDict);
-    const primSymp = caseInfo.primarySymptoms.map((obj) => symptomsDict[obj].name);
-    console.log("prim");
-    const secSymp = caseInfo.secondarySymptoms.map((obj) => symptomsDict[obj].name);
-    console.log("sec");
-    const PEfindings = caseInfo.PEfindings.map((obj) => PE_Dict[obj].name);
-    console.log("pe");
+    // console.log(caseInfo.primarySymptoms);
+    // console.log(symptomsDict);
+    const symp = caseInfo.symptoms.map((obj) => symptomsDict[obj].name);
+    // console.log("prim");
+    // const secSymp = caseInfo.secondarySymptoms.map((obj) => symptomsDict[obj].name);
+    // console.log("sec");
+    // const PEfindings = caseInfo.PEfindings.map((obj) => PE_Dict[obj].name);
+    // console.log("pe");
     case_div.innerHTML = `
         <h3>Case</h3>
-        <p>Primary symptoms: ${primSymp}</p>
-        <p>Secondary symptoms: ${secSymp}</p>
-        <p>PE findings: ${PEfindings} </p>
+        <p>Symptoms: ${symp}</p>
+        <p>PE findings: none </p>
         <p>what tests would you like to order? </p>
         <form id="testsInput">
             <input type="text" id="tests" name="tests" placeholder="comma separated list" class="inputField" required />
@@ -92,7 +93,7 @@ const getNewCase = async (symptomsDict, testsDict, testResultsDict, PE_Dict, tre
             <input type="submit" id = "submitDiagnosis" />
         </form>
     `;
-    console.log("html");
+    // console.log("html");
     container.append(case_div)
     const diag_div = document.createElement('div');
     container.append(diag_div);
@@ -192,8 +193,8 @@ const openCaseButton = document.getElementById("newCaseButton");
 const symptomsDict_Glob = await getSymptomsFromBackend();
 window.sessionStorage.setItem('symptomsDict', JSON.stringify(symptomsDict_Glob));
 
-const PE_Dict_Glob = await getPEFromBackend();
-window.sessionStorage.setItem('PE_Dict', JSON.stringify(PE_Dict_Glob));
+// const PE_Dict_Glob = await getPEFromBackend();
+// window.sessionStorage.setItem('PE_Dict', JSON.stringify(PE_Dict_Glob));
 
 const testsDict_Glob = await getTestsFromBackend();
 window.sessionStorage.setItem('testsDict', JSON.stringify(testsDict_Glob));
@@ -214,7 +215,7 @@ console.log(treatmentsDict_Glob);
 
 openCaseButton.addEventListener("click", function() {
     console.log("calling");
-    getNewCase(symptomsDict_Glob, testsDict_Glob, testResultsDict_Glob, PE_Dict_Glob, treatmentsDict_Glob)});
+    getNewCase(symptomsDict_Glob, testsDict_Glob, testResultsDict_Glob, treatmentsDict_Glob)});
 
   
   // Note that top-level await is only available in modern browsers

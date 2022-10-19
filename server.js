@@ -9,7 +9,7 @@ const getTestsDB = moduleToFetch.getTestsDB;
 const newCase = moduleToFetch.getCase;
 const userTests = moduleToFetch.getUserTests;
 const updateDifficulty = moduleToFetch.updateDifficulty;
-const getPE_DB = moduleToFetch.getPE_DB;
+// const getPE_DB = moduleToFetch.getPE_DB;
 const getTreatmentsDB = moduleToFetch.getTreatmentsDB;
 
 
@@ -34,6 +34,7 @@ app.get("/tests", async (req, res) => {
 
 
 app.get("/symptoms", async (req, res) => {
+    console.log("getting Sx app.get");
     const symptomsDict = await getSymptomsDB();
     res.json(symptomsDict);
   });
@@ -43,10 +44,10 @@ const treatmentsDict = await getTreatmentsDB();
 res.json(treatmentsDict);
 });
 
-app.get("/pe_findings", async (req, res) => {
-    const PE_Dict = await getPE_DB();
-    res.json(PE_Dict);
-});
+// app.get("/pe_findings", async (req, res) => {
+//     const PE_Dict = await getPE_DB();
+//     res.json(PE_Dict);
+// });
 
 app.get("/case", async (req, res) => {
     const caseInfo = await newCase();

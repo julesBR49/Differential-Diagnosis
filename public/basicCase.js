@@ -1,6 +1,8 @@
 
 const caseInfo = JSON.parse(window.sessionStorage.getItem("currentCase"));
 
+console.log(caseInfo);
+
 const parseTestData = function(test_array, case_id){
     const testsDict = JSON.parse(window.sessionStorage.getItem("testsDict"));
     const testResultsDict = JSON.parse(window.sessionStorage.getItem("testResultsDict"));
@@ -19,7 +21,7 @@ const parseTestData = function(test_array, case_id){
             results = testResultsDict[result_id].results;
         };
         return {
-            "test": el,
+            "test": elem,
             "results": results,
             "id": result_id
     };
@@ -36,28 +38,48 @@ const formatUL = (arrayToFormat) => {
     }
 };
 
+const showImg = (imgPath, thisNode) => {
+    console.log(imgPath);
+    const img_node = document.createElement("img");
+    thisNode.appendChild(img_node);
+    img_node.src = imgPath;
+    img_node.className = "test_result_img";
+}
+
 const getCase = async () => {
-
+    console.log("in getCase");
     const symptomsDict = JSON.parse(window.sessionStorage.getItem("symptomsDict"));
-    const PE_Dict = JSON.parse(window.sessionStorage.getItem("PE_Dict"));
+    // const PE_Dict = JSON.parse(window.sessionStorage.getItem("PE_Dict"));
+    console.log(caseInfo.symptoms);
+    console.log("hi");
+    const symp = caseInfo.symptoms.map((obj) => symptomsDict[obj].name);
+    console.log(symptomsDict);
+    console.log(symp);
+    const patient_profile = ["standard_patient.png"];
+    console.log(caseInfo.patient);
+    if (caseInfo.patient != "" && caseInfo.patient != undefined){
+        patient_profile.push(...caseInfo.patient.split(","));
+    }
+    const this_patient = patient_profile[Math.floor(Math.random() * patient_profile.length)];
+    console.log(this_patient);
+    //console.log("prim");
+    // const secSymp = caseInfo.secondarySymptoms.map((obj) => symptomsDict[obj].name);
+    //console.log("sec");
+    // const PEfindings = caseInfo.PEfindings.map((obj) => PE_Dict[obj].name);
+    //console.log("pe");
 
-    const primSymp = caseInfo.primarySymptoms.map((obj) => symptomsDict[obj].name);
-    console.log("prim");
-    const secSymp = caseInfo.secondarySymptoms.map((obj) => symptomsDict[obj].name);
-    console.log("sec");
-    const PEfindings = caseInfo.PEfindings.map((obj) => PE_Dict[obj].name);
-    console.log("pe");
+    //console.log("html");
+    document.getElementById("symptoms").innerHTML = formatUL(symp);
+    // document.getElementById("secondarySymptoms").innerHTML = formatUL(secSymp);
 
-    console.log("html");
-    document.getElementById("primarySymptoms").innerHTML = formatUL(primSymp);
-    document.getElementById("secondarySymptoms").innerHTML = formatUL(secSymp);
-    document.getElementById("PE_Findings").innerHTML = formatUL(PEfindings);
+
+    showImg("patients/" + this_patient.replace(" ", ""), document.getElementById("patient"));
 
 };
 
 const diag_form  = document.getElementById('diagnosisInput');
 diag_form.addEventListener('submit', (event) => {
-    console.log("event listener called");
+    //console.log("event listener called");
     event.preventDefault();
     new FormData(diag_form);
 });
@@ -66,10 +88,12 @@ diag_form.addEventListener('formdata', async (event) => {
     const diagnosis = event.formData.get("diagnosis");
     let num = 0; // incorrect
     // console.log(diagnosis)
-    // const div = document.createElement('div');
+    const diag_div = document.getElementById('diagnosisFeedback');
+    
     const treatmentsDict = JSON.parse(window.sessionStorage.getItem("treatmentsDict"));
 
     const treatments = caseInfo.treatments.map((obj) => treatmentsDict[obj]);
+    console.log(treatments);
     const diag_names = diagnosis.split(",");
     diag_names.forEach((el) => {
         if (el.toLowerCase() == caseInfo.name.toLowerCase()){
@@ -133,30 +157,56 @@ test_form.addEventListener('formdata', (event) => {
 
             const res_node = document.createElement("p");
             // div.classList.add("userContainer");
-            if (value.results.endsWith(".png") || value.results.endsWith(".jpeg") || value.results.endsWith(".jpg")){
-                const imgPath = "images/" + value.results;
-                const img_node = document.createElement("img");
-                res_node.appendChild(img_node);
-                img_node.src = imgPath;
-                img_node.className = "test_result_img";
+
+            value.results.split(",").forEach((result) => {
+                console.log(result);
+                if (result.endsWith(".png") || result.endsWith(".jpeg") || result.endsWith(".jpg")){
+                    const imgPath = "images/" + result;
+                    const img_node = document.createElement("img");
+                    res_node.appendChild(img_node);
+                    img_node.src = imgPath;
+                    img_node.className = "test_result_img";
+                }
+                else {
+                    const res_value_node = document.createTextNode(result);
+                    res_node.appendChild(res_value_node);
+                };
+                res_node.appendChild(document.createElement("br"));
+            });
+
+            // if (value.results.endsWith(".png") || value.results.endsWith(".jpeg") || value.results.endsWith(".jpg")){
+            //     const imgPath = "images/" + value.results;
+            //     const img_node = document.createElement("img");
+            //     res_node.appendChild(img_node);
+            //     img_node.src = imgPath;
+            //     img_node.className = "test_result_img";
+
+
+
                 // img_node.max-width = 90;
     
             //     div.innerHTML = `
             //     <h3>${value.test}</h3>
             //     <p><img src=${imgPath} class="img"></p>
             // `;
-            }
-            else {
-                const res_value_node = document.createTextNode(value.results);
-                res_node.appendChild(res_value_node);
+
+
+            // }
+            // else {
+            //     const res_value_node = document.createTextNode(value.results);
+            //     res_node.appendChild(res_value_node);
                 
+
+
             //     div.innerHTML = `
             //     <h3>${value.test}</h3>
             //     <p>${value.results}</p>
             // `;
-            };
+
+            // };
             result_div.appendChild(res_node);
             res_node.scrollIntoView();
+            test_form.reset()
 
             // container.append(div);
     });

@@ -18,10 +18,18 @@
 
             <h3>Case</h3>
 
-            <p>Primary symptoms: <span id="primarySymptoms"></span></p>
-            <p>Secondary symptoms: <span id="secondarySymptoms"></span></p>
-            <p>PE findings: <span id="PE_Findings"></span> </p>
-            <p>what tests would you like to order? </p>
+            <p>Patient </p>
+            <span id="patient"></span>
+            <p>Symptoms <span id="symptoms"></span></p>
+            <!-- <p>Secondary symptoms: <span id="secondarySymptoms"></span></p> -->
+
+      </div>
+      </div>
+
+      <div class="row">
+
+        <div class="column" id="diagDiv">
+          <p>what tests would you like to order? </p>
             <form id="testsInput">
                 <input type="text" id="tests" name="tests" placeholder="comma separated list" class="inputField" required />
                 <input type="submit" id = "submitTests" />
@@ -31,11 +39,11 @@
                 <input type="text" id="diagnosis" name="diagnosis" placeholder="enter your top diagnosis" class="inputField" required />
                 <input type="submit" id = "submitDiagnosis" />
             </form>
-
+            <p id="diagnosisFeedback"></p>
         </div>
         <div class="column" id="testResultsDiv_outer">
-            <h3>Test Results</h3>
-            <div class="column_scroll" id="testResultsDiv">
+          <h3>Test Results</h3>
+          <div class="column_scroll" id="testResultsDiv"> </div>
 
         </div>
       </div>

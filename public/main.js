@@ -1,7 +1,10 @@
 
 const getSymptomsFromBackend = async () => {
+    console.log("calling Sx app get");
     const rest = await fetch("http://localhost:8000/symptoms");
+    console.log("get Sx from back");
     const data = await rest.json();
+    console.log("get Sx from back - ready to return");
     return data;
 };
 
@@ -11,11 +14,11 @@ const getTreatmentsFromBackend = async () => {
     return data;
 };
 
-const getPEFromBackend = async () => {
-    const rest = await fetch("http://localhost:8000/pe_findings");
-    const data = await rest.json();
-    return data;
-};
+// const getPEFromBackend = async () => {
+//     const rest = await fetch("http://localhost:8000/pe_findings");
+//     const data = await rest.json();
+//     return data;
+// };
 
 const getTestResultsFromBackend = async () => {
     const rest = await fetch("http://localhost:8000/test_results");
@@ -195,9 +198,9 @@ window.sessionStorage.setItem('symptomsDict', JSON.stringify(symptomsDict_Glob))
 console.log("symptoms dict");
 
 // const PE_Dict = "PE_Dict";
-const PE_Dict_Glob = await getPEFromBackend();
-window.sessionStorage.setItem('PE_Dict', JSON.stringify(PE_Dict_Glob));
-console.log("pe dict");
+// const PE_Dict_Glob = await getPEFromBackend();
+// window.sessionStorage.setItem('PE_Dict', JSON.stringify(PE_Dict_Glob));
+// console.log("pe dict");
 
 // const testsDict = 'testsDict';
 const testsDict_Glob = await getTestsFromBackend();
@@ -223,7 +226,7 @@ console.log("ready");
 
 
 openCaseButton.addEventListener("click", async function() {
-    console.log("calling");
+    console.log("calling event listener");
     const resp = await fetch("http://localhost:8000/case");
     const caseInfo = await resp.json();
     console.log("case:", caseInfo);
@@ -236,9 +239,9 @@ openCaseButton.addEventListener("click", async function() {
     // getNewCase(symptomsDict_Glob, testsDict_Glob, testResultsDict_Glob, PE_Dict_Glob, treatmentsDict_Glob)
 });
 
-const newCaseButton = document.getElementById("newCaseButton");
+// const newCaseButton = document.getElementById("newCaseButton");
 
-newCaseButton.innerHTML = "Create a case";
+openCaseButton.innerHTML = "Create a case";
 
 
   

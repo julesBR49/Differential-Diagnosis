@@ -18,7 +18,7 @@ html {
 
 .column_scroll {
   /* flex: 50%; */
-  height: 90vh;
+  height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -54,6 +54,14 @@ html {
 }
 
 #caseDiv {
+  /* margin-top: 40px; */
+  padding: 40px;
+
+  
+
+}
+
+#diagDiv {
   /* margin-top: 40px; */
   padding: 40px;
 
