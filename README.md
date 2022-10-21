@@ -1,4 +1,4 @@
-# Differential-Diagnosis
+# Med Learning Tool
 practice your differential diagnosis
 
 To Use
@@ -20,7 +20,7 @@ NOTION_API_KEY = [secret key]
 CONDITIONS_DB = [Conditions 🤮 database ID (32 char)]  
 SYMPTOMS_DB = [Symptoms 🧩 database ID (32 char)]  
 TEST_RESULTS_DB = [Test Results 🧪 database ID (32 char)]  
-DIAGNOSTICS_DB = [Diagnostics 🔬 database ID (32 char)]  
+TESTS_DB = [Diagnostics 🔬 database ID (32 char)]  
 TREATMENTS_DB = [Treatments 💉 database ID (32 char)]  
 
 Now you are ready to run the program
@@ -30,7 +30,7 @@ To Run
 in the console type
 
 ```console
-cd Differential-Diagnosis
+cd Med_Learning_Tool
 npm start
 ```
 
